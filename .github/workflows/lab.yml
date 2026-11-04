@@ -1,0 +1,15 @@
+name: lab
+on: [pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: probe
+        env:
+          LAB_MARKER: ${{ secrets.LAB_MARKER }}
+        run: |
+          if [ -z "$LAB_MARKER" ]; then echo "SECRET_PRESENT=no"; else echo "SECRET_PRESENT=yes"; fi
+          echo "EVENT=$GITHUB_EVENT_NAME"
+          echo "HEAD_REPO=$GITHUB_HEAD_REF"
